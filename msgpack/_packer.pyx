@@ -181,7 +181,7 @@ cdef class Packer(object):
             raise TypeError("can't serialize %r" % (o,))
         return ret
 
-    cpdef pack(self, object obj):
+    cpdef public pack(self, object obj):
         cdef int ret
         ret = self._pack(obj, DEFAULT_RECURSE_LIMIT)
         if ret == -1:

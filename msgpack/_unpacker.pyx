@@ -86,6 +86,13 @@ def unpackb(object packed, object object_hook=None, object list_hook=None,
 
     See :class:`Unpacker` for options.
     """
+    return _unpackb(packed, object_hook, list_hook, use_list, encoding,
+                    unicode_errors, object_pairs_hook)
+
+
+cdef public _unpackb(object packed, object object_hook, object list_hook,
+              bint use_list, encoding, unicode_errors,
+              object_pairs_hook):
     cdef unpack_context ctx
     cdef size_t off = 0
     cdef int ret
@@ -129,10 +136,8 @@ def unpack(object stream, object object_hook=None, object list_hook=None,
 
     See :class:`Unpacker` for options.
     """
-    return unpackb(stream.read(), use_list=use_list,
-                   object_hook=object_hook, object_pairs_hook=object_pairs_hook, list_hook=list_hook,
-                   encoding=encoding, unicode_errors=unicode_errors,
-                   )
+    return _unpackb(stream.read(), object_hook, list_hook, use_list,
+                    encoding, unicode_errors, object_pairs_hook)
 
 
 cdef class Unpacker(object):
